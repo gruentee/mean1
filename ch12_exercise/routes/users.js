@@ -5,7 +5,6 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  // TODO: implement database query for users
   User.find().sort('id').exec(function (error, users) {
     if (error) {
       return next(error);
