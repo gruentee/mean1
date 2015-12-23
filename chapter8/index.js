@@ -165,11 +165,37 @@ function updateEmployee (first, last, data, callback) {
   });
 }
 
+function flushDatabase (callback) {
+  Team.remove({}, function (err) {
+    if(err) {
+      console.log('[ERROR] error deleting teams:' + err);
+    } else {
+      console.info('[SUCCESS] All teams deleted.');
+    }
+  });
+  Employee.remove({}, function (err) {
+    if(err) {
+      console.log('[ERROR] error deleting employees:' + err );
+    } else {
+      console.info('[SUCCESS] All employees deleted.');
+    }
+  });
+  callback();
+}
+
 mongoose.connect(dbUrl, function (err) {
   if (err) {
     return console.log('there was a problem connecting to the database!' + err);
   }
   console.log('connected!');
+  
+  flushDatabase(function(err) {
+      if(err) {
+          console.log('Something went wrong while flushing the database!' + err);
+      } else {
+          console.info('Database flushed');
+      }
+  });
 
   insertTeams(function (err, pd, devops, acct) {
     if (err) {
