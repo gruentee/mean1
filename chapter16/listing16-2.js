@@ -2,7 +2,7 @@ var app = angular.module('app', []);
 app.controller('main', ['$scope', function($scope) {
   $scope.firstName = $scope.lastName = undefined;
   $scope.gender = 'female';
-  $scope.style = {color:'orange'};
+  $scope.style = {color:'pink'};
 
   $scope.signup = function () {
     var person = {
