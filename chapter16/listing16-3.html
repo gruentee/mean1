@@ -1,8 +1,11 @@
+<!DOCTYPE html>
 <html lang="en" ng-app="app">
   <body ng-controller="main">
     <input type="text" ng-model="firstName" placeholder="first name">
     <input type="text" ng-model="lastName" placeholder="first name">
     <button ng-disabled="!(firstName.length && lastName.length)" ng-click="add()">Add</button>
+    <hr />
+    Sort by <a href="#" ng-click="sort('first')">first name</a> | <a href="#" ng-click="sort('last')">last name</a>
     <table>
       <tr ng-repeat="p in presidents">
         <td>{{p.first}}</td>
@@ -10,7 +13,7 @@
         <td><button ng-click="$parent.remove(p)">Remove</button></td>
       </tr>
     </table>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
     <script>
         var app = angular.module('app', []);
         app.controller('main', ['$scope', function($scope) {
@@ -36,6 +39,14 @@
 
           $scope.remove = function(president) {
             $scope.presidents.splice($scope.presidents.indexOf(president), 1 );
+          }
+          
+          $scope.sort = function (key) {
+            $scope.presidents.sort(function (a, b) {
+              if(a[key] < b[key]) return  -1;
+              if(a[key] > b[key]) return 1;
+              if(a[key] == b[key]) return 0;
+            });
           }
         }]);
     </script>
