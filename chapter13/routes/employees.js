@@ -14,6 +14,26 @@ router.get('/employees', function(req, res, next) {
   });
 });
 
+router.post('/employees', function(req, res, next) {
+  // TODO: do validation
+  var employeeId= Math.random() * (99 - 32) + 32;
+  var postData = {
+    id: "1000" + employeeId.toString(),
+    name: {
+      first: req.body.first,
+      last: req.body.last
+    }
+  };
+  Employee.create(postData, function (error, employee) {
+    if (error) {
+      console.error('Error: ' + error);
+      // TODO: output error to client
+      return next(error);
+    }
+    res.json(employee);
+  });
+});
+
 router.get('/employees/:employeeId', function(req, res, next) {
   Employee.findOne({
     id: req.params.employeeId
@@ -48,6 +68,25 @@ router.put('/employees/:employeeId', function(req, res, next) {
   });
 });
 
+router.delete('/employees/:employeeId', function (req, res, next) {
+  // TODO: validation
+  
+  // Find employee by ID
+  Employee.findOneAndRemove({
+    id: req.params.employeeId
+  }, function (error) {
+    if(error) {
+      return next(error);
+    }
+    Employee.find().exec(function (error, result)  {
+      if(error) {
+        return next(error);
+      }
+      console.log("Employee with id " + req.params.employeeId + " deleted.");
+      res.json(result);
+    });
+  });
+});
 module.exports = router;
 
 
