@@ -16,9 +16,9 @@ router.get('/employees', function(req, res, next) {
 
 router.post('/employees', function(req, res, next) {
   // TODO: do validation
-  var employeeId= Math.random() * (99 - 32) + 32;
+  var employeeId= Math.floor(Math.random() * (99 - 32) + 32);
   var postData = {
-    id: "1000" + employeeId.toString(),
+    id: "10000" + employeeId.toString(),
     name: {
       first: req.body.first,
       last: req.body.last
