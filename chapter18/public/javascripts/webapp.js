@@ -11,6 +11,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: 'edit.html',
       controller: 'edit'
     })
+    //~ .when('/edit');
     .otherwise({
       redirectTo: '/'
     });
@@ -23,11 +24,16 @@ app.factory('EmployeeService', ['$resource', function ($resource) {
     },
     get: {
       isArray: false
-    }
+    },
+    update: {
+      method: 'PUT',
+      isArray: false
+    } 
   });
 }]);
 
-app.controller('view', ['$scope', 'EmployeeService', function ($scope, EmployeeService) {
+app.controller('view', ['$scope', 'EmployeeService', 
+  function ($scope, EmployeeService) {
   $scope.employees = [];
   $scope.firstName = $scope.lastName = '';
 
@@ -44,4 +50,14 @@ app.controller('edit', ['$scope', 'EmployeeService','$routeParams', function ($s
   }, function (data) {
     $scope.employee = data;
   });
+  
+  // save functionality
+  $scope.save = function (employee){
+    EmployeeService.update({
+      employeeId: $routeParams.employeeId
+    }, employee, function (data) {
+      console.log('employee saved');
+    });
+  }
+
 }]);

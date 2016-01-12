@@ -2,5 +2,6 @@
   <legend>{{employee.name.first}} {{employee.name.last}}</legend>
   <input type="text" name="first" ng-model="employee.name.first"><label for="first">First Name</label>
   <input type="text" name="last" ng-model="employee.name.last"><label for="last">Last Name</label>
+  <button name="save" ng-disabled="!(employee.name.first.length && employee.name.last.length)" ng-click="save(employee)">Save</button>
 </fieldset>
 <a href='#/view'>Back &laquo; </a>
